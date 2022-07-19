@@ -9,5 +9,5 @@ const dokter = require('./dokterModel');
 
 
 module.exports = {
-    
+    createUser,
 };
