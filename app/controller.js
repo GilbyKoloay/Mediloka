@@ -569,6 +569,53 @@ const updateRSKasur = async(req, res, next) => {
     }
 };
 
+// update darah di RS
+const updateRSDarah = async(req, res, next) => {
+    console.log(req.body);
+    try {
+        const exist = await RS.find({
+            _id: req.body._id,
+        });
+
+        if(exist.length === 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed updating blood.`,
+                desc: `Hospital not found.`,
+            });
+        }
+        else if(exist.length > 0) {
+            const result = await RS.updateOne({
+                _id: req.body._id,
+            }, {
+                darah: {
+                    A_Plus: (req.body.A_Plus !== undefined) && parseInt(req.body.A_Plus),
+                    A_Min: (req.body.A_Min !== undefined) && parseInt(req.body.A_Min),
+                    B_Plus: (req.body.B_Plus !== undefined) && parseInt(req.body.B_Plus),
+                    B_Min: (req.body.B_Min !== undefined) && parseInt(req.body.B_Min),
+                    O_Plus: (req.body.O_Plus !== undefined) && parseInt(req.body.O_Plus),
+                    O_Min: (req.body.O_Min !== undefined) && parseInt(req.body.O_Min),
+                    AB_Plus: (req.body.AB_Plus !== undefined) && parseInt(req.body.AB_Plus),
+                    AB_Min: (req.body.AB_Min !== undefined) && parseInt(req.body.AB_Min),
+                }
+            });
+
+            res.send({
+                status: `Success`,
+                message: `Success updating blood.`,
+                desc: result,
+            });
+        }
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed updating blood.`,
+            desc: e.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -586,4 +633,5 @@ module.exports = {
     allRS,
     createRS,
     updateRSKasur,
+    updateRSDarah,
 };
