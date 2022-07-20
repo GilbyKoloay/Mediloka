@@ -82,12 +82,12 @@ const updateUser = async(req, res, next) => {
             const result = await user.updateOne({
                 _id: req.body._id,
             }, {
-                email: req.body.email,
-                password: req.body.password,
-                nama: req.body.nama,
-                tempatLahir: req.body.tempatLahir,
-                tanggalLahir: new Date(`${req.body.tahunLahir}-${(parseInt(req.body.bulanLahir) < 10) ? `0${parseInt(req.body.bulanLahir)}` : req.body.bulanLahir}-${(parseInt(req.body.tanggalLahir) < 10) ? `0${parseInt(req.body.tanggalLahir)}` : req.body.tanggalLahir}`),
-                jenisKelamin: req.body.jenisKelamin,
+                email: (req.body.email !== undefined) && req.body.email,
+                password: (req.body.password !== undefined) && req.body.password,
+                nama: (req.body.nama !== undefined) && req.body.nama,
+                tempatLahir: (req.body.tempatLahir !== undefined) && req.body.tempatLahir,
+                tanggalLahir: (req.body.tahunLahir !== undefined) && new Date(`${req.body.tahunLahir}-${(parseInt(req.body.bulanLahir) < 10) ? `0${parseInt(req.body.bulanLahir)}` : req.body.bulanLahir}-${(parseInt(req.body.tanggalLahir) < 10) ? `0${parseInt(req.body.tanggalLahir)}` : req.body.tanggalLahir}`),
+                jenisKelamin: (req.body.jenisKelamin !== undefined) && req.body.jenisKelamin,
             });
     
             res.send({
@@ -244,12 +244,12 @@ const updateDokter = async(req, res, next) => {
             const result = await dokter.updateOne({
                 _id: req.body._id,
             }, {
-                nama: req.body.nama,
+                nama: (req.body.nama !== undefined) && req.body.nama,
                 spesialisasi: {
-                    spesialis: req.body.spesialis,
-                    singkatan: req.body.singkatan,
+                    spesialis: (req.body.spesialis !== undefined) && req.body.spesialis,
+                    singkatan: (req.body.singkatan !== undefined) && req.body.singkatan,
                 },
-                informasiTerkait: req.body.informasiTerkait,
+                informasiTerkait: (req.body.informasiTerkait !== undefined) && req.body.informasiTerkait,
             });
     
             res.send({
