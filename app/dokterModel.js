@@ -16,40 +16,37 @@ const dokterSchema = new mongoose.Schema({
         },
     },
     praktek: [{
+        namaRS: {
+            type: String,
+            default: null,
+        },
         lokasi: {
             type: String,
             default: null,
         },
-        jadwal: [{
-            senin: {
-                type: Number,
-                default: null,
-            },
-            selasa: {
-                type: Number,
-                default: null,
-            },
-            rabu: {
-                type: Number,
-                default: null,
-            },
-            kamis: {
-                type: Number,
-                default: null,
-            },
-            jumat: {
-                type: Number,
-                default: null,
-            },
-            sabtu: {
-                type: Number,
-                default: null,
-            },
-            minggu: {
-                type: Number,
-                default: null,
-            }
-        }],
+        jadwal: {
+            senin: [{
+                type: Array,
+            }],
+            selasa: [{
+                type: Array,
+            }],
+            rabu: [{
+                type: Array,
+            }],
+            kamis: [{
+                type: Array,
+            }],
+            jumat: [{
+                type: Array,
+            }],
+            sabtu: [{
+                type: Array,
+            }],
+            minggu: [{
+                type: Array,
+            }],
+        },
     }],
     informasiTerkait: {
         type: String,

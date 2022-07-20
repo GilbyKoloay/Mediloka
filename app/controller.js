@@ -109,32 +109,45 @@ const updateUser = async(req, res, next) => {
 // tambah rekam medis di user
 const createUserRM = async(req, res, next) => {
     try {
-        const result = await user.updateOne({
+        const exist = await user.find({
             _id: req.body._id,
-        }, {
-            $push: {
-                rekamMedis: {
-                    tanggalPeriksa: new Date(
-                        new Date().getFullYear(),
-                        new Date().getMonth(),
-                        new Date().getDate(),
-                        new Date().getHours(),
-                        new Date().getMinutes(),
-                        new Date().getSeconds(),
-                    ),
-                    diagnosa: req.body.diagnosa,
-                    tindakan: req.body.tindakan,
-                    keadaanKeluar: req.body.keadaanKeluar,
-                    caraKeluar: req.body.caraKeluar,
-                }
-            }
         });
 
-        res.send({
-            status: `Success`,
-            message: `Success adding new medical record.`,
-            desc: result,
-        });
+        if(exist.length === 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed adding new medical record.`,
+                desc: `User does not exist.`,
+            });
+        }
+        else if(exist.length > 0) {
+            const result = await user.updateOne({
+                _id: req.body._id,
+            }, {
+                $push: {
+                    rekamMedis: {
+                        tanggalPeriksa: new Date(
+                            new Date().getFullYear(),
+                            new Date().getMonth(),
+                            new Date().getDate(),
+                            new Date().getHours(),
+                            new Date().getMinutes(),
+                            new Date().getSeconds(),
+                        ),
+                        diagnosa: req.body.diagnosa,
+                        tindakan: req.body.tindakan,
+                        keadaanKeluar: req.body.keadaanKeluar,
+                        caraKeluar: req.body.caraKeluar,
+                    }
+                }
+            });
+    
+            res.send({
+                status: `Success`,
+                message: `Success adding new medical record.`,
+                desc: result,
+            });
+        }
     }
     catch(e) {
         res.send({
@@ -213,7 +226,6 @@ const createDokter = async(req, res, next) => {
 
 // update dokter (tanpa jadwal praktek)
 const updateDokter = async(req, res, next) => {
-    console.log(req.body);
     try {
         const exist = await dokter.find({
             _id: req.body._id,
@@ -254,6 +266,59 @@ const updateDokter = async(req, res, next) => {
     }
 };
 
+// menambahkan jadwal praktek dokter
+const createDokterP = async(req, res, next) => {
+    try {
+        const exist = await dokter.find({
+            _id: req.body._id,
+        });
+        
+        if(exist.length === 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed adding schedule.`,
+                desc: `Doctor does not exist.`,
+            });
+        }
+        else if(exist.length > 0) {
+            const result = await dokter.updateOne({
+                _id: req.body._id,
+            }, {
+                $push: {
+                    praktek: {
+                        namaRS: req.body.namaRS,
+                        lokasi: req.body.lokasi,
+                        jadwal: {
+                            // senin: [[9, 30], [10, 30]],
+                            // senin: [[jam mulai, menit mulai], [jam selesai, menit selesai]],
+                            senin: req.body.senin,
+                            selasa: req.body.selasa,
+                            rabu: req.body.rabu,
+                            kamis: req.body.kamis,
+                            jumat: req.body.jumat,
+                            sabtu: req.body.sabtu,
+                            minggu: req.body.minggu,
+                        },
+                    },
+                },
+            });
+
+            res.send({
+                status: `Success`,
+                message: `Success adding schedule.`,
+                desc: result,
+            });
+        }
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed adding schedule.`,
+            desc: e.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -265,4 +330,5 @@ module.exports = {
     allDokter,
     createDokter,
     updateDokter,
+    createDokterP,
 };
