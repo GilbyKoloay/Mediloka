@@ -618,7 +618,6 @@ const updateRSDarah = async(req, res, next) => {
 
 // tambah ambulance
 const createRSAmbulans = async(req, res, next) => {
-    console.log(req.body);
     try {
         const exist = await RS.find({
             _id: req.body._id,
@@ -659,6 +658,48 @@ const createRSAmbulans = async(req, res, next) => {
     }
 };
 
+// update ambulans
+const updateRSAmbulans = async(req, res, next) => {
+    console.log(req.body);
+    try {
+        const exist = await RS.find({
+            _id: req.body._id,
+        });
+
+        if(exist.length === 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed updating ambulance data.`,
+                desc: `Hospital does not exist.`,
+            });
+        }
+        else if(exist.length > 0) {
+            const result = await RS.updateOne({
+                _id: req.body._id,
+                "ambulans._id": req.body._idAmbulans,
+            }, {
+                $set: {
+                    "ambulans.$.tersedia": req.body.tersedia,
+                    "ambulans.$.lokasi": req.body.lokasi,
+                },
+            });
+
+            res.send({
+                status: `Success`,
+                message: `Success upadting ambulance data.`,
+                desc: result,
+            });
+        }
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed updating ambulance data.`,
+            desc: e.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -678,4 +719,5 @@ module.exports = {
     updateRSKasur,
     updateRSDarah,
     createRSAmbulans,
+    updateRSAmbulans,
 };
