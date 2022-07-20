@@ -11,6 +11,8 @@ const {
     updateDokter,
     createDokterP,
     updateDokterP,
+
+    createRS,
 } = require('./controller');
 
 router.get('/allUser', allUser);
@@ -23,5 +25,7 @@ router.post('/createDokter', createDokter);
 router.put('/updateDokter', updateDokter);
 router.post('/createDokterP', createDokterP);
 router.put('/updateDokterP', updateDokterP);
+
+router.post('/createRS', createRS);
 
 module.exports = router;

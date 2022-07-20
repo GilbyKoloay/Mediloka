@@ -161,6 +161,8 @@ const createUserRM = async(req, res, next) => {
 
 
 // ====================================================================================================
+// ====================================================================================================
+// ====================================================================================================
 
 
 
@@ -381,6 +383,52 @@ const updateDokterP = async(req, res, next) => {
 
 
 
+// ====================================================================================================
+// ====================================================================================================
+// ====================================================================================================
+
+
+
+// buat RS baru
+const createRS = async(req, res, next) => {
+    console.log(req.body);
+    try {
+        const exist = await RS.find({
+            nama: req.body.nama,
+        });
+
+        if(exist.length > 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed creating new hospital.`,
+                desc: `Hospital name already exist.`,
+            });
+        }
+        else if(exist.length === 0) {
+            const result = await RS.create({
+                nama: req.body.nama,
+                lokasi: req.body.lokasi,
+            });
+
+            res.send({
+                status: `Success`,
+                message: `Success creating new hospital.`,
+                desc: result,
+            });
+        }
+        
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed creating new hospital.`,
+            desc: e.message,
+        });
+    }
+};
+
+
+
 module.exports = {
     allUser,
     createUser,
@@ -392,4 +440,6 @@ module.exports = {
     updateDokter,
     createDokterP,
     updateDokterP,
+
+    createRS,
 };
