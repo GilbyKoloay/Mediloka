@@ -27,20 +27,33 @@ const allUser = async(req, res, next) => {
 // tambah user baru (nd dengan rekam medis)
 const createUser = async(req, res, next) => {
     try {
-        const result = await user.create({
-            email: req.body.email,
-            password: req.body.password,
-            nama: req.body.nama,
-            tempatLahir: req.body.tempatLahir,
-            tanggalLahir: new Date(`${req.body.tahunLahir}-${(parseInt(req.body.bulanLahir) < 10) ? `0${parseInt(req.body.bulanLahir)}` : req.body.bulanLahir}-${(parseInt(req.body.tanggalLahir) < 10) ? `0${parseInt(req.body.tanggalLahir)}` : req.body.tanggalLahir}`),
-            jenisKelamin: req.body.jenisKelamin,
+        const exist = await user.find({
+            email: req.body.email
         });
+        
+        if(exist.length > 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed creating new user.`,
+                desc: `Email already exist.`,
+            });
+        }
+        else if(exist.length === 0) {
+            const result = await user.create({
+                email: req.body.email,
+                password: req.body.password,
+                nama: req.body.nama,
+                tempatLahir: req.body.tempatLahir,
+                tanggalLahir: new Date(`${req.body.tahunLahir}-${(parseInt(req.body.bulanLahir) < 10) ? `0${parseInt(req.body.bulanLahir)}` : req.body.bulanLahir}-${(parseInt(req.body.tanggalLahir) < 10) ? `0${parseInt(req.body.tanggalLahir)}` : req.body.tanggalLahir}`),
+                jenisKelamin: req.body.jenisKelamin,
+            });
 
-        res.send({
-            status: `Success`,
-            message: `Success creating new user.`,
-            desc: result,
-        });
+            res.send({
+                status: `Success`,
+                message: `Success creating new user.`,
+                desc: result,
+            });
+        }
     }
     catch(e) {
         res.send({
