@@ -158,6 +158,38 @@ const createUserRM = async(req, res, next) => {
     }
 };
 
+// cek kalo user terdaftar (autentikasi login)
+const userLogin = async(req, res, next) => {
+    try {
+        const result = await user.findOne({
+            email: req.query.email,
+            password: req.query.password,
+        });
+
+        if(result === null) {
+            res.send({
+                status: `Error`,
+                message: `Failed to login.`,
+                desc: `User not found`,
+            });
+        }
+        else if(result !== null) {
+            res.send({
+                status: `Success`,
+                message: `Success to login.`,
+                desc: result,
+            });
+        }
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed to login.`,
+            desc: e.message,
+        });
+    }
+}
+
 
 
 // ====================================================================================================
@@ -411,7 +443,6 @@ const allRS = async(req, res, next) => {
 
 // buat RS baru
 const createRS = async(req, res, next) => {
-    console.log(req.body);
     try {
         const exist = await RS.find({
             nama: req.body.nama,
@@ -571,7 +602,6 @@ const updateRSKasur = async(req, res, next) => {
 
 // update darah di RS
 const updateRSDarah = async(req, res, next) => {
-    console.log(req.body);
     try {
         const exist = await RS.find({
             _id: req.body._id,
@@ -660,7 +690,6 @@ const createRSAmbulans = async(req, res, next) => {
 
 // update ambulans
 const updateRSAmbulans = async(req, res, next) => {
-    console.log(req.body);
     try {
         const exist = await RS.find({
             _id: req.body._id,
@@ -707,6 +736,7 @@ module.exports = {
     createUser,
     updateUser,
     createUserRM,
+    userLogin,
 
     allDokter,
     createDokter,

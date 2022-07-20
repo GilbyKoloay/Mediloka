@@ -5,6 +5,7 @@ const {
     createUser,
     updateUser,
     createUserRM,
+    userLogin,
 
     allDokter,
     createDokter,
@@ -24,6 +25,7 @@ router.get('/allUser', allUser);
 router.post('/createUser', createUser);
 router.put('/updateUser', updateUser);
 router.post('/createUserRM', createUserRM);
+router.get('/userLogin', userLogin);
 
 router.get('/allDokter', allDokter);
 router.post('/createDokter', createDokter);
