@@ -389,6 +389,26 @@ const updateDokterP = async(req, res, next) => {
 
 
 
+// ambil semua data RS
+const allRS = async(req, res, next) => {
+    try {
+        const result = await RS.find();
+
+        res.send({
+            status: `Success`,
+            message: `Success getting all hospitals data.`,
+            desc: result,
+        });
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Error getting all hospitals data.`,
+            desc: e.message,
+        });
+    }
+};
+
 // buat RS baru
 const createRS = async(req, res, next) => {
     console.log(req.body);
@@ -441,5 +461,6 @@ module.exports = {
     createDokterP,
     updateDokterP,
 
+    allRS,
     createRS,
 };
