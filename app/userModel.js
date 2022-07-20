@@ -17,10 +17,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "'tempat lahir' tidak boleh kosong"],
     },
-    tanggalLahir: {
-        type: Date,
-        required: [true, "'tanggal lahir' tidak boleh kosong"],
-    },
+    // tanggalLahir: {
+    //     type: Date,
+    //     required: [true, "'tanggal lahir' tidak boleh kosong"],
+    // },
     jenisKelamin: {
         type: String,
         enum: ['Laki-Laki', 'Perempuan'],

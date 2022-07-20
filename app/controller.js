@@ -44,7 +44,7 @@ const createUser = async(req, res, next) => {
                 password: req.body.password,
                 nama: req.body.nama,
                 tempatLahir: req.body.tempatLahir,
-                tanggalLahir: new Date(`${req.body.tahunLahir}-${(parseInt(req.body.bulanLahir) < 10) ? `0${parseInt(req.body.bulanLahir)}` : req.body.bulanLahir}-${(parseInt(req.body.tanggalLahir) < 10) ? `0${parseInt(req.body.tanggalLahir)}` : req.body.tanggalLahir}`),
+                // tanggalLahir: new Date(`${req.body.tahunLahir}-${(parseInt(req.body.bulanLahir) < 10) ? `0${parseInt(req.body.bulanLahir)}` : req.body.bulanLahir}-${(parseInt(req.body.tanggalLahir) < 10) ? `0${parseInt(req.body.tanggalLahir)}` : req.body.tanggalLahir}`),
                 jenisKelamin: req.body.jenisKelamin,
             });
 
@@ -86,7 +86,7 @@ const updateUser = async(req, res, next) => {
                 password: (req.body.password !== undefined) && req.body.password,
                 nama: (req.body.nama !== undefined) && req.body.nama,
                 tempatLahir: (req.body.tempatLahir !== undefined) && req.body.tempatLahir,
-                tanggalLahir: (req.body.tahunLahir !== undefined) && new Date(`${req.body.tahunLahir}-${(parseInt(req.body.bulanLahir) < 10) ? `0${parseInt(req.body.bulanLahir)}` : req.body.bulanLahir}-${(parseInt(req.body.tanggalLahir) < 10) ? `0${parseInt(req.body.tanggalLahir)}` : req.body.tanggalLahir}`),
+                // tanggalLahir: (req.body.tahunLahir !== undefined) && new Date(`${req.body.tahunLahir}-${(parseInt(req.body.bulanLahir) < 10) ? `0${parseInt(req.body.bulanLahir)}` : req.body.bulanLahir}-${(parseInt(req.body.tanggalLahir) < 10) ? `0${parseInt(req.body.tanggalLahir)}` : req.body.tanggalLahir}`),
                 jenisKelamin: (req.body.jenisKelamin !== undefined) && req.body.jenisKelamin,
             });
     
