@@ -152,6 +152,26 @@ const createUserRM = async(req, res, next) => {
 
 
 
+// ambil semua data dokter
+const allDokter = async(req, res, next) => {
+    try {
+        const result = await dokter.find();
+
+        res.send({
+            status: `Success`,
+            message: `Success getting all doctors data.`,
+            desc: result,
+        });
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed getting all doctors data.`,
+            desc: e.message,
+        });
+    }
+};
+
 // tambah dokter (tanpa praktek)
 const createDokter = async(req, res, next) => {
     try {
@@ -200,5 +220,6 @@ module.exports = {
     updateUser,
     createUserRM,
 
+    allDokter,
     createDokter,
 };
