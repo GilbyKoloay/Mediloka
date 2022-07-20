@@ -4,6 +4,26 @@ const dokter = require('./dokterModel');
 
 
 
+// ambil semua user
+const allUser = async(req, res, next) => {
+    try {
+        const result = await user.find();
+
+        res.send({
+            status: `Success`,
+            message: `Success getting all user data.`,
+            desc: result,
+        });
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed getting all user data.`,
+            desc: e.message,
+        });
+    }
+};
+
 // tambah user baru (nd dengan rekam medis)
 const createUser = async(req, res, next) => {
     try {
@@ -17,14 +37,14 @@ const createUser = async(req, res, next) => {
         });
 
         res.send({
-            status: `success`,
+            status: `Success`,
             message: `Success creating new user.`,
             desc: result,
         });
     }
     catch(e) {
         res.send({
-            status: `error`,
+            status: `Error`,
             message: `Failed creating new user.`,
             desc: e.message,
         });
@@ -56,14 +76,14 @@ const createUserRM = async(req, res, next) => {
         });
 
         res.send({
-            status: `success`,
+            status: `Success`,
             message: `Success adding new medical record.`,
             desc: result,
         });
     }
     catch(e) {
         res.send({
-            status: `error`,
+            status: `Error`,
             message: `Failed adding new medical record.`,
             desc: e.message,
         });
@@ -73,6 +93,7 @@ const createUserRM = async(req, res, next) => {
 
 
 module.exports = {
+    allUser,
     createUser,
     createUserRM,
 };
