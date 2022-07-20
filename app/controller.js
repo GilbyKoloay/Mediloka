@@ -319,6 +319,66 @@ const createDokterP = async(req, res, next) => {
     }
 };
 
+// mengupdate jadwal praktek dokter
+const updateDokterP = async(req, res, next) => {
+    try {
+        const exist = await dokter.find({
+            _id: req.body._id,
+        });
+
+        if(exist.length === 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed modifying doctor's schedule.`,
+                desc: `Doctor not found.`,
+            });
+        }
+        else if(exist.length > 0) {
+            const result = await dokter.updateOne({
+                _id: req.body._id,
+                "praktek.namaRS": req.body.namaRS,
+            }, {
+                $set: {
+                    "praktek.$.lokasi": req.body.lokasi,
+                    "praktek.$.jadwal": {
+                        // senin: [[15, 30], [16, 30]],
+                        // senin: [[jam mulai, menit mulai], [jam selesai, menit selesai]],
+                        senin: req.body.senin,
+                        selasa: req.body.selasa,
+                        rabu: req.body.rabu,
+                        kamis: req.body.kamis,
+                        jumat: req.body.jumat,
+                        sabtu: req.body.sabtu,
+                        minggu: req.body.minggu,
+                    }
+                }
+            });
+            
+            if(result.matchedCount === 0) {
+                res.send({
+                    status: `Error`,
+                    message: `Failed modifying doctor's schedule.`,
+                    desc: `${req.body.namaRS} not found in doctor's schedule.`,
+                });
+            }
+            else {
+                res.send({
+                    status: `Success`,
+                    message: `Success modifying doctor's schedule.`,
+                    desc: result,
+                });
+            }
+        }
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed modifying doctor's schedule.`,
+            desc: e.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -331,4 +391,5 @@ module.exports = {
     createDokter,
     updateDokter,
     createDokterP,
+    updateDokterP,
 };
