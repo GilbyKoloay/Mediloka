@@ -8,6 +8,7 @@ const {
 
     allDokter,
     createDokter,
+    updateDokter,
 } = require('./controller');
 
 router.get('/allUser', allUser);
@@ -17,5 +18,6 @@ router.post('/createUserRM', createUserRM);
 
 router.get('/allDokter', allDokter);
 router.post('/createDokter', createDokter);
+router.put('/updateDokter', updateDokter);
 
 module.exports = router;

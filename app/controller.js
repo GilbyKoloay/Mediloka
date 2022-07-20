@@ -66,7 +66,6 @@ const createUser = async(req, res, next) => {
 
 // update user data (nd pke medical record)
 const updateUser = async(req, res, next) => {
-    console.log(req.body);
     try {
         const exist = await user.find({
             _id: req.body._id,
@@ -93,7 +92,7 @@ const updateUser = async(req, res, next) => {
     
             res.send({
                 status: `Success`,
-                message: `Success to udpate user data.`,
+                message: `Success to update user data.`,
                 desc: result,
             });
         }
@@ -101,7 +100,7 @@ const updateUser = async(req, res, next) => {
     catch(e) {
         res.send({
             status: `Error`,
-            message: `Failed to udpate user data.`,
+            message: `Failed to update user data.`,
             desc: e.message,
         });
     }
@@ -212,6 +211,49 @@ const createDokter = async(req, res, next) => {
     }
 };
 
+// update dokter (tanpa jadwal praktek)
+const updateDokter = async(req, res, next) => {
+    console.log(req.body);
+    try {
+        const exist = await dokter.find({
+            _id: req.body._id,
+        });
+
+        if(exist.length === 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed to update doctor data.`,
+                desc: `Doctor not found.`
+            });
+        }
+        else if(exist.length > 0) {
+            const result = await dokter.updateOne({
+                _id: req.body._id,
+            }, {
+                nama: req.body.nama,
+                spesialisasi: {
+                    spesialis: req.body.spesialis,
+                    singkatan: req.body.singkatan,
+                },
+                informasiTerkait: req.body.informasiTerkait,
+            });
+    
+            res.send({
+                status: `Success`,
+                message: `Success to update doctor data.`,
+                desc: result,
+            });
+        }
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed to update doctor data.`,
+            desc: e.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -222,4 +264,5 @@ module.exports = {
 
     allDokter,
     createDokter,
+    updateDokter,
 };
