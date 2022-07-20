@@ -64,7 +64,7 @@ const createUser = async(req, res, next) => {
     }
 };
 
-// update user data
+// update user data (nd pke medical record)
 const updateUser = async(req, res, next) => {
     console.log(req.body);
     try {
@@ -148,9 +148,57 @@ const createUserRM = async(req, res, next) => {
 
 
 
+// ====================================================================================================
+
+
+
+// tambah dokter (tanpa praktek)
+const createDokter = async(req, res, next) => {
+    try {
+        const exist = await dokter.find({
+            nama: req.body.nama,
+        });
+
+        if(exist.length > 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed creating new doctor.`,
+                desc: `Doctor already exist.`,
+            });
+        }
+        else if(exist.length === 0) {
+            const result = await dokter.create({
+                nama: req.body.nama,
+                spesialisasi: {
+                    spesialis: req.body.spesialis,
+                    singkatan: req.body.singkatan,
+                },
+                informasiTerkait: req.body.informasiTerkait,
+            });
+
+            res.send({
+                status: `Success`,
+                message: `Success creating new doctor.`,
+                desc: result,
+            });
+        }
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed creating new doctor.`,
+            desc: e.message,
+        });
+    }
+};
+
+
+
 module.exports = {
     allUser,
     createUser,
     updateUser,
     createUserRM,
+
+    createDokter,
 };

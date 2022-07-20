@@ -247,6 +247,6 @@ const RSSchema = new mongoose.Schema({
             default: null,
         }    
     }]
-});
+}, {collection: 'RS'});
 
 module.exports = mongoose.model('RS', RSSchema);

@@ -6,12 +6,14 @@ const dokterSchema = new mongoose.Schema({
         required: [true, "'nama' tidak boleh kosong"],
     },
     spesialisasi: {
-        type: String,
-        default: null,
-    },
-    jabatan: {
-        type: String,
-        default: null,
+        spesialis: {
+            type: String,
+            default: null,
+        },
+        singkatan: {
+            type: String,
+            default: null,
+        },
     },
     praktek: [{
         lokasi: {
@@ -53,6 +55,6 @@ const dokterSchema = new mongoose.Schema({
         type: String,
         default: null,
     }
-});
+}, {collection: 'dokter'});
 
 module.exports = mongoose.model('dokter', dokterSchema);
