@@ -4,7 +4,7 @@ const dokter = require('./dokterModel');
 
 
 
-// fungsi for tambah user baru (nd dengan rekam medis)
+// tambah user baru (nd dengan rekam medis)
 const createUser = async(req, res, next) => {
     try {
         const result = await user.create({
@@ -25,7 +25,46 @@ const createUser = async(req, res, next) => {
     catch(e) {
         res.send({
             status: `error`,
-            message: `Failed creating new.`,
+            message: `Failed creating new user.`,
+            desc: e.message,
+        });
+    }
+};
+
+// tambah rekam medis di user
+const createUserRM = async(req, res, next) => {
+    try {
+        const result = await user.updateOne({
+            _id: req.body._id,
+        }, {
+            $push: {
+                rekamMedis: {
+                    tanggalPeriksa: new Date(
+                        new Date().getFullYear(),
+                        new Date().getMonth(),
+                        new Date().getDate(),
+                        new Date().getHours(),
+                        new Date().getMinutes(),
+                        new Date().getSeconds(),
+                    ),
+                    diagnosa: req.body.diagnosa,
+                    tindakan: req.body.tindakan,
+                    keadaanKeluar: req.body.keadaanKeluar,
+                    caraKeluar: req.body.caraKeluar,
+                }
+            }
+        });
+
+        res.send({
+            status: `success`,
+            message: `Success adding new medical record.`,
+            desc: result,
+        });
+    }
+    catch(e) {
+        res.send({
+            status: `error`,
+            message: `Failed adding new medical record.`,
             desc: e.message,
         });
     }
@@ -35,4 +74,5 @@ const createUser = async(req, res, next) => {
 
 module.exports = {
     createUser,
+    createUserRM,
 };
