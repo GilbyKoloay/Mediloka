@@ -447,6 +447,128 @@ const createRS = async(req, res, next) => {
     }
 };
 
+// upadte jumlah kasur
+const updateRSKasur = async(req, res, next) => {
+    try {
+        const exist = await RS.find({
+            _id: req.body._id,
+        });
+
+        if(exist.length === 0) {
+            res.send({
+                status: `Error`,
+                message: `Failed updating hospital's bed.`,
+                desc: `Hospital does not exist.`,
+            });
+        }
+        else if(exist.length > 0) {
+            const result = await RS.updateOne({
+                _id: req.body._id,
+            }, {
+                jumlahKasur: {
+                    ICU: {
+                        Nyiur: {
+                            tersedia: (req.body.ICU.Nyiur[0] !== undefined) && req.body.ICU.Nyiur[0],
+                            digunakan: (req.body.ICU.Nyiur[1] !== undefined) && req.body.ICU.Nyiur[1],
+                        },
+                        Anggrek_I: {
+                            tersedia: (req.body.ICU.Anggrek_I[0] !== undefined) && req.body.ICU.Anggrek_I[0],
+                            digunakan: (req.body.ICU.Anggrek_I[1] !== undefined) && req.body.ICU.Anggrek_I[1],
+                        },
+                        IRINA_B: {
+                            tersedia: (req.body.ICU.IRINA_B[0] !== undefined) && req.body.ICU.IRINA_B[0],
+                            digunakan: (req.body.ICU.IRINA_B[1] !== undefined) && req.body.ICU.IRINA_B[1],
+                        }
+                    },
+                    SVIP: {
+                        Nyiur: {
+                            tersedia: (req.body.SVIP.Nyiur[0] !== undefined) && req.body.SVIP.Nyiur[0],
+                            digunakan: (req.body.SVIP.Nyiur[1] !== undefined) && req.body.SVIP.Nyiur[1],
+                        },
+                        Anggrek_I: {
+                            tersedia: (req.body.SVIP.Anggrek_I[0] !== undefined) && req.body.SVIP.Anggrek_I[0],
+                            digunakan: (req.body.SVIP.Anggrek_I[1] !== undefined) && req.body.SVIP.Anggrek_I[1],
+                        },
+                        IRINA_B: {
+                            tersedia: (req.body.SVIP.IRINA_B[0] !== undefined) && req.body.SVIP.IRINA_B[0],
+                            digunakan: (req.body.SVIP.IRINA_B[1] !== undefined) && req.body.SVIP.IRINA_B[1],
+                        }
+                    },
+                    VIP: {
+                        Nyiur: {
+                            tersedia: (req.body.VIP.Nyiur[0] !== undefined) && req.body.VIP.Nyiur[0],
+                            digunakan: (req.body.VIP.Nyiur[1] !== undefined) && req.body.VIP.Nyiur[1],
+                        },
+                        Anggrek_I: {
+                            tersedia: (req.body.VIP.Anggrek_I[0] !== undefined) && req.body.VIP.Anggrek_I[0],
+                            digunakan: (req.body.VIP.Anggrek_I[1] !== undefined) && req.body.VIP.Anggrek_I[1],
+                        },
+                        IRINA_B: {
+                            tersedia: (req.body.VIP.IRINA_B[0] !== undefined) && req.body.VIP.IRINA_B[0],
+                            digunakan: (req.body.VIP.IRINA_B[1] !== undefined) && req.body.VIP.IRINA_B[1],
+                        }
+                    },
+                    KelasI: {
+                        Nyiur: {
+                            tersedia: (req.body.KelasI.Nyiur[0] !== undefined) && req.body.KelasI.Nyiur[0],
+                            digunakan: (req.body.KelasI.Nyiur[1] !== undefined) && req.body.KelasI.Nyiur[1],
+                        },
+                        Anggrek_I: {
+                            tersedia: (req.body.KelasI.Anggrek_I[0] !== undefined) && req.body.KelasI.Anggrek_I[0],
+                            digunakan: (req.body.KelasI.Anggrek_I[1] !== undefined) && req.body.KelasI.Anggrek_I[1],
+                        },
+                        IRINA_B: {
+                            tersedia: (req.body.KelasI.IRINA_B[0] !== undefined) && req.body.KelasI.IRINA_B[0],
+                            digunakan: (req.body.KelasI.IRINA_B[1] !== undefined) && req.body.KelasI.IRINA_B[1],
+                        }
+                    },
+                    KelasII: {
+                        Nyiur: {
+                            tersedia: (req.body.KelasII.Nyiur[0] !== undefined) && req.body.KelasII.Nyiur[0],
+                            digunakan: (req.body.KelasII.Nyiur[1] !== undefined) && req.body.KelasII.Nyiur[1],
+                        },
+                        Anggrek_I: {
+                            tersedia: (req.body.KelasII.Anggrek_I[0] !== undefined) && req.body.KelasII.Anggrek_I[0],
+                            digunakan: (req.body.KelasII.Anggrek_I[1] !== undefined) && req.body.KelasII.Anggrek_I[1],
+                        },
+                        IRINA_B: {
+                            tersedia: (req.body.KelasII.IRINA_B[0] !== undefined) && req.body.KelasII.IRINA_B[0],
+                            digunakan: (req.body.KelasII.IRINA_B[1] !== undefined) && req.body.KelasII.IRINA_B[1],
+                        }
+                    },
+                    KelasIII: {
+                        Nyiur: {
+                            tersedia: (req.body.KelasIII.Nyiur[0] !== undefined) && req.body.KelasIII.Nyiur[0],
+                            digunakan: (req.body.KelasIII.Nyiur[1] !== undefined) && req.body.KelasIII.Nyiur[1],
+                        },
+                        Anggrek_I: {
+                            tersedia: (req.body.KelasIII.Anggrek_I[0] !== undefined) && req.body.KelasIII.Anggrek_I[0],
+                            digunakan: (req.body.KelasIII.Anggrek_I[1] !== undefined) && req.body.KelasIII.Anggrek_I[1],
+                        },
+                        IRINA_B: {
+                            tersedia: (req.body.KelasIII.IRINA_B[0] !== undefined) && req.body.KelasIII.IRINA_B[0],
+                            digunakan: (req.body.KelasIII.IRINA_B[1] !== undefined) && req.body.KelasIII.IRINA_B[1],
+                        }
+                    },
+                },
+            });
+
+            res.send({
+                status: `Success`,
+                message: `Success updating hospital's bed.`,
+                desc: result,
+            });
+        }
+    }
+    catch(e) {
+        res.send({
+            status: `Error`,
+            message: `Failed updating hospital's bed.`,
+            desc: e.message,
+        });
+    }
+};
+
 
 
 module.exports = {
@@ -463,4 +585,5 @@ module.exports = {
 
     allRS,
     createRS,
+    updateRSKasur,
 };

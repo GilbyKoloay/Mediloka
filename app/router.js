@@ -14,6 +14,7 @@ const {
 
     allRS,
     createRS,
+    updateRSKasur,
 } = require('./controller');
 
 router.get('/allUser', allUser);
@@ -29,5 +30,6 @@ router.put('/updateDokterP', updateDokterP);
 
 router.get('/allRS', allRS);
 router.post('/createRS', createRS);
+router.put('/updateRSKasur', updateRSKasur);
 
 module.exports = router;
