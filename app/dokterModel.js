@@ -15,6 +15,10 @@ const dokterSchema = new mongoose.Schema({
             default: null,
         },
     },
+    poli: {
+        type: String,
+        default: null,
+    },
     praktek: [{
         namaRS: {
             type: String,

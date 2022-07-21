@@ -239,6 +239,7 @@ const createDokter = async(req, res, next) => {
                     spesialis: req.body.spesialis,
                     singkatan: req.body.singkatan,
                 },
+                poli: req.body.poli,
                 informasiTerkait: req.body.informasiTerkait,
             });
 
@@ -281,6 +282,7 @@ const updateDokter = async(req, res, next) => {
                     spesialis: (req.body.spesialis !== undefined) && req.body.spesialis,
                     singkatan: (req.body.singkatan !== undefined) && req.body.singkatan,
                 },
+                poli: (req.body.poli !== undefined) && req.body.poli,
                 informasiTerkait: (req.body.informasiTerkait !== undefined) && req.body.informasiTerkait,
             });
     
